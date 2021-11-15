@@ -4,15 +4,16 @@ import { Button, Gap } from '../../atoms'
 import './blogitem.scss'
 import { useHistory } from 'react-router-dom'
 
-function BlogItem () {
+function BlogItem (props) {
     const history = useHistory();
+    const {image, title, name, date, body} = props;
     return (
         <div className="blog-item">
-            <img className="image-thumb" src={RegisterBg} alt="post" />
+            <img className="image-thumb" src={image} alt="post" />
             <div className="content-detail">
-                <p className="title">TitleBlog</p>
-                <p className="author">Author - Date post</p>
-                <p className="body">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.   </p>
+                <p className="title">{title}</p>
+                <p className="author">{name} - {date}</p>
+                <p className="body">{body}</p>
                 <Gap height={20} />
                 <Button title="View Detail" onClick={() => history.push('/detail-blog')} />
             </div>
