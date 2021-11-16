@@ -5,6 +5,9 @@ import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { setDataBlog } from '../../config/redux/action'
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css'
+import axios from 'axios'
 
 
 const Home = () => {
@@ -25,6 +28,35 @@ const Home = () => {
     const next = () => {
         setCounter(counter === page.totalPage ? page.totalPage : counter + 1)
     }
+
+    const confirmDelete = (id) => {
+        confirmAlert({
+            title: 'Confirm to delete',
+            message: 'Apakah Anda yakin akan menghapus post ini?',
+            buttons: [
+                {
+                    label: 'Ya',
+                    onClick: () => {
+                        axios.delete(`http://localhost:4000/v1/blog/post/${id}`)
+                        .then(res => {
+                            console.log('success delete: ', res.data)
+                            dispatch(setDataBlog(counter))
+                        })
+                        .catch(err => {
+                            console.log('err: ', err)
+                        })
+
+                    }
+                },
+                {
+                    label: 'Tidak',
+                    onClick: () => console.log('tidak user setuju')
+                }
+            ]
+        });
+    }
+
+
     return (
         <div className="home-page-wrapper">
             <div className="create-wrapper">
@@ -41,7 +73,8 @@ const Home = () => {
                     body={blog.body}
                     name={blog.author.name}
                     date={blog.createdAt}
-                    _id={blog._id} />
+                    _id={blog._id} 
+                    onDelete={confirmDelete} />
                 )
                 })}
             </div>
