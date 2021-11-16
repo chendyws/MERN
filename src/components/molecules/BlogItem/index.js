@@ -10,6 +10,12 @@ function BlogItem (props) {
         <div className="blog-item">
             <img className="image-thumb" src={image} alt="post" />
             <div className="content-detail">
+                <div className="title-wrapper">
+                    <p className="title">{title}</p>
+                    <div className="edit-wrapper">
+                        <p className="edit" onClick={() => history.push(`/create-blog/${_id}`)}>Edit</p> | <p className="delete">Delete</p>
+                    </div>
+                </div>
                 <p className="title">{title}</p>
                 <p className="author">{name} - {date}</p>
                 <p className="body">{body}</p>
